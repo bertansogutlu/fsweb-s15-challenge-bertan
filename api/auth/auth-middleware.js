@@ -8,7 +8,7 @@ const validateRegisterPayload = (req, res, next) => {
       req.body.role_id = 1;
       next();
     } else {
-      res.status(400).json({ message: "Username ve password gereklidir" });
+      res.status(400).json({ message: "username ve şifre gereklidir" });
     }
   } catch (error) {
     next(error);
@@ -22,7 +22,7 @@ const validateUserName = async (req, res, next) => {
     if (user) {
       next();
     } else {
-      res.status(400).json({ message: "Kullanici bulunamadi" });
+      res.status(400).json({ message: "geçersiz kriterler" });
     }
   } catch (error) {
     next(error);
@@ -38,7 +38,7 @@ const validatePassword = async (req, res, next) => {
     if (validPassword) {
       next();
     } else {
-      res.status(400).json({ message: "Password yanlis" });
+      res.status(400).json({ message: "geçersiz kriterler" });
     }
   } catch (error) {
     next(error);

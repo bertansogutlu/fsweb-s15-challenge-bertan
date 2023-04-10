@@ -1,8 +1,16 @@
 const router = require('express').Router();
+const mw = require('./auth-middleware');
+const userModel = require('../users/user-model');
+const bcryptjs = require("bcryptjs");
+const utils = require('../../secrets/utils');
 
-router.post('/register', (req, res, next) => {
+router.post('/register',mw.validateRegisterPayload, async(req, res, next) => {
   try {
-    res.status(200).json('post')
+    const newUser = await userModel.create({
+      username: req.body.username,
+      password: bcryptjs.hashSync(req.body.password,8)
+    })
+    res.status(200).json(newUser)
   } catch (error) {
     next(error)
   }
@@ -34,9 +42,14 @@ router.post('/register', (req, res, next) => {
   */
 });
 
-router.post('/login', (req, res, next) => {
+router.post('/login',mw.validateRegisterPayload,mw.validateUserName,mw.validatePassword, async(req, res, next) => {
   try {
-    res.status(200).json('login')
+    const payload = {
+      username: req.body.username,
+      password: req.body.password,
+    }
+    const token = utils.createUserToken(payload,'8h')
+    res.status(200).json({message: `welcome, ${payload.username}`, token: token})
   } catch (error) {
     next(error)
   }
