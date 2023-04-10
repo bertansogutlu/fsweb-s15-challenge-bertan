@@ -8,6 +8,10 @@ async function getById (id) {
     return await db('users').where('user_id',id).first();
 }
 
+async function getByName (name) {
+    return await db('users').where('username',name).first();
+}
+
 async function create (user) {
     const [id] = await db('users').insert(user);
     const newUser = await getById(id);
@@ -17,5 +21,6 @@ async function create (user) {
 module.exports = {
     getAll,
     getById,
+    getByName,
     create
 }
