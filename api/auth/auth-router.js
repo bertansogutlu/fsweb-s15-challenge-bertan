@@ -4,11 +4,12 @@ const userModel = require('../users/user-model');
 const bcryptjs = require("bcryptjs");
 const utils = require('../../secrets/utils');
 
-router.post('/register',mw.validateRegisterPayload, async(req, res, next) => {
+router.post('/register',mw.validateRegisterPayload,mw.checkUserName, async(req, res, next) => {
   try {
     const newUser = await userModel.create({
       username: req.body.username,
-      password: bcryptjs.hashSync(req.body.password,8)
+      password: bcryptjs.hashSync(req.body.password,8),
+      role_id: req.body.role_id,
     })
     res.status(200).json(newUser)
   } catch (error) {

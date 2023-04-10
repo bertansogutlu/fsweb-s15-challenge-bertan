@@ -5,7 +5,7 @@ async function getAll () {
 }
 
 async function getById (id) {
-    return await db('users').where('user_id',id).first();
+    return await db('users').select('user_id','username','password').where('user_id',id).first();
 }
 
 async function getByName (name) {

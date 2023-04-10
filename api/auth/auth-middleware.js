@@ -8,7 +8,21 @@ const validateRegisterPayload = (req, res, next) => {
       req.body.role_id = 1;
       next();
     } else {
-      res.status(400).json({ message: "username ve şifre gereklidir" });
+      res.status(400).json({ message: "username ve password gereklidir" });
+    }
+  } catch (error) {
+    next(error);
+  }
+};
+
+const checkUserName = async (req, res, next) => {
+  try {
+    const { username } = req.body;
+    const user = await userModel.getByName(username);
+    if (user) {
+      res.status(400).json({ message: "username alınmış" });
+    } else {
+      next();
     }
   } catch (error) {
     next(error);
@@ -47,6 +61,7 @@ const validatePassword = async (req, res, next) => {
 
 module.exports = {
   validateRegisterPayload,
+  checkUserName,
   validateUserName,
   validatePassword,
   validatePassword,
