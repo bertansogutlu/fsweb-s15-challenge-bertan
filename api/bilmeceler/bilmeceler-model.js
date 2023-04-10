@@ -12,8 +12,8 @@ async function getById (id) {
 async function create (riddle) {
     riddle.id = uuid.v4()
     await db('riddles').insert(riddle);
-    const yeniBilmece = await getById(riddle.id);
-    return yeniBilmece;
+    const newRiddle = await getById(riddle.id);
+    return newRiddle;
 }
 
 module.exports = {
