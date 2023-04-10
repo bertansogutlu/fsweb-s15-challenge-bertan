@@ -3,7 +3,7 @@ const JWT = require("jsonwebtoken");
 
 module.exports = (req, res, next) => {
   try {
-    const token = req.header["authorization"];
+    const token = req.headers["authorization"];
     if (token) {
       JWT.verify(token, JWT_SECRET, (err, decodedToken) => {
         if (err) {
