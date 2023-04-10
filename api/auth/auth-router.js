@@ -1,7 +1,12 @@
 const router = require('express').Router();
 
-router.post('/register', (req, res) => {
-  res.end('kayıt olmayı ekleyin, lütfen!');
+router.post('/register', (req, res, next) => {
+  try {
+    res.status(200).json('post')
+  } catch (error) {
+    next(error)
+  }
+
   /*
     EKLEYİN
     Uçnoktanın işlevselliğine yardımcı olmak için middlewarelar yazabilirsiniz.
@@ -29,8 +34,13 @@ router.post('/register', (req, res) => {
   */
 });
 
-router.post('/login', (req, res) => {
-  res.end('girişi ekleyin, lütfen!');
+router.post('/login', (req, res, next) => {
+  try {
+    res.status(200).json('login')
+  } catch (error) {
+    next(error)
+  }
+
   /*
     EKLEYİN
     Uçnoktanın işlevselliğine yardımcı olmak için middlewarelar yazabilirsiniz.
