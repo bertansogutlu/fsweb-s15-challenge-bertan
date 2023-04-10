@@ -1,5 +1,24 @@
+const { JWT_SECRET } = require("../../secrets/secretToken");
+const JWT = require("jsonwebtoken");
+
 module.exports = (req, res, next) => {
-  next();
+  try {
+    const token = req.header["authorization"];
+    if (token) {
+      JWT.verify(token, JWT_SECRET, (err, decodedToken) => {
+        if (err) {
+          res.status(401).json({ message: "token geçersizdir" });
+        } else {
+          req.decodedToken = decodedToken;
+          next();
+        }
+      });
+    } else {
+      res.status(401).json({ message: "token gereklidir" });
+    }
+  } catch (error) {
+    next(error);
+  }
   /*
     EKLEYİN
 
