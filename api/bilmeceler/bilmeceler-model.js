@@ -1,4 +1,5 @@
 const db = require('../../data/dbConfig');
+const uuid = require('uuid');
 
 async function getAll () {
     return await db('riddles');
@@ -9,27 +10,14 @@ async function getById (id) {
 }
 
 async function create (riddle) {
-    const [id] = await db('riddles').insert(riddle);
-    const yeniBilmece = await getById('123Dh34TyTa');
-    return id;
-}
-
-async function update (id,gorev) {
-    await db('Gorevler').where('GorevID',id).update(gorev);
-    const guncelGorev = await getById(id);
-    return guncelGorev;
-}
-
-async function remove (id) {
-    const silinenBilmece = await getById(id);
-
-    return silinenBilmece;
+    riddle.id = uuid.v4()
+    await db('riddles').insert(riddle);
+    const yeniBilmece = await getById(riddle.id);
+    return yeniBilmece;
 }
 
 module.exports = {
     getAll,
     getById,
-    create,
-    update,
-    remove
+    create
 }

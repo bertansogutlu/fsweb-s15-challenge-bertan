@@ -10,7 +10,6 @@ router.get('/', (req, res) => {
 router.get('/deneme', async(req, res, next) => {
   try {
     res.status(200).json(await bilmecelerModel.create( {
-      "id": "123Dh34TyTa",
       "bilmece": "Bir kamyonu kim cift eliyle durdurabilir?"
     }))
   } catch (error) {
